@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>IT-клуб для детей | Программирование, робототехника, 3D</title>
+  <style>
+    /* ========== RESET & GLOBAL ========== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --white: #ffffff;
+      --light-bg: #f4f7fc;
+      --blue-accent: #495d8b;
+      --blue-soft: #d9e2f0;
+      --blue-light: #eef3fa;
+      --black: #1a1e2b;
+      --gray: #6b7280;
+      --shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+      --radius: 20px;
+      --font-heading: 'Pacifico', cursive;
+      --font-body: 'Roboto', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--light-bg);
+      color: var(--black);
+      line-height: 1.5;
+      scroll-behavior: smooth;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Приглушенные IT-элементы на фоне (детская тематика) */
+    body::before {
+      content: "⚙️ 🤖 🧩 🖥️ 📡 🔧";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      font-size: 140px;
+      line-height: 1.8;
+      letter-spacing: 60px;
+      color: rgba(73, 93, 139, 0.03);
+      pointer-events: none;
+      z-index: 0;
+      transform: rotate(-10deg) scale(1.2);
+      white-space: pre-wrap;
+      word-break: break-all;
+      padding: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      justify-content: center;
+    }
+
+    /* Контейнер для контента поверх фона */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ========== TYPOGRAPHY ========== */
+    h1, h2, h3, .pacifico {
+      font-family: var(--font-heading);
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      line-height: 1.3;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 6vw, 3.8rem);
+    }
+
+    h2 {
+      font-size: clamp(1.9rem, 5vw, 2.8rem);
+      color: var(--blue-accent);
+    }
+
+    h3 {
+      font-size: 1.4rem;
+      color: var(--black);
+    }
+
+    p {
+      font-size: 1rem;
+      color: #2e3548;
+    }
+
+    .section-title {
+      margin-bottom: 1.8rem;
+      text-align: center;
+    }
+
+    .section-sub {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 2.5rem;
+      color: var(--gray);
+      font-size: 1.15rem;
+    }
+
+    /* ========== BUTTONS ========== */
+    .btn {
+      display: inline-block;
+      padding: 0.9rem 2.2rem;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 1.1rem;
+      border-radius: 60px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      text-align: center;
+      letter-spacing: 0.3px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .btn-primary {
+      background: var(--blue-accent);
+      color: var(--white);
+      border: 2px solid var(--blue-accent);
+    }
+
+    .btn-primary:hover {
+      background: #3b4d73;
+      border-color: #3b4d73;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 22px rgba(73, 93, 139, 0.3);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--blue-accent);
+      border: 2px solid var(--blue-accent);
+    }
+
+    .btn-outline:hover {
+      background: var(--blue-accent);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    /* ========== HEADER ========== */
+    header {
+      padding: 1.2rem 0;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--blue-soft);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      font-size: 2rem;
+      background: var(--blue-accent);
+      color: white;
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 14px rgba(73, 93, 139, 0.25);
+      font-family: 'Pacifico', cursive;
+      line-height: 1;
+    }
+
+    .logo-text {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      color: var(--blue-accent);
+      line-height: 1.2;
+    }
+
+    .logo-text span {
+      color: var(--black);
+      font-size: 1rem;
+      display: block;
+      font-family: var(--font-body);
+      font-weight: 400;
+      letter-spacing: 0.3px;
+      color: var(--gray);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--black);
+      font-weight: 500;
+      font-size: 1rem;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    nav a:hover {
+      color: var(--blue-accent);
+    }
+
+    nav a:not(.btn)::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--blue-accent);
+      transition: width 0.25s ease;
+    }
+
+    nav a:not(.btn):hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      padding: 0.6rem 1.8rem;
+      font-size: 0.95rem;
+    }
+
+    /* ========== HERO ========== */
+    .hero {
+      padding: 3rem 0 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .hero-content {
+      flex: 1 1 360px;
+    }
+
+    .hero-content h1 {
+      color: var(--blue-accent);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .hero-content h1 span {
+      color: var(--black);
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.5em;
+      display: block;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      color: var(--blue-accent);
+    }
+
+    .hero-sub {
+      font-size: 1.25rem;
+      color: #2e3548;
+      margin-bottom: 2rem;
+      max-width: 540px;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .hero-image {
+      flex: 1 1 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-image .tech-illustration {
+      background: linear-gradient(145deg, var(--white), var(--blue-light));
+      border-radius: 40px;
+      padding: 40px 30px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--blue-soft);
+      width: 100%;
+    }
+
+    .hero-image .tech-illustration .big-icon {
+      font-size: 8rem;
+      line-height: 1;
+      filter: drop-shadow(0 10px 12px rgba(73, 93, 139, 0.15));
+    }
+
+    .hero-image .tech-illustration p {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      color: var(--blue-accent);
+      margin-top: 8px;
+    }
+
+    /* ========== ADVANTAGES ========== */
+    .advantages {
+      padding: 2.5rem 0;
+    }
+
+    .adv-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      justify-content: center;
+    }
+
+    .adv-card {
+      flex: 1 1 180px;
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 1.8rem 1.2rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(73, 93, 139, 0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+      backdrop-filter: blur(2px);
+    }
+
+    .adv-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 32px rgba(73, 93, 139, 0.12);
+    }
+
+    .adv-icon {
+      font-size: 2.8rem;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+
+    .adv-card h3 {
+      font-size: 1.1rem;
+      font-family: var(--font-body);
+      font-weight: 700;
+      color: var(--blue-accent);
+      margin-bottom: 0.4rem;
+    }
+
+    .adv-card p {
+      font-size: 0.95rem;
+      color: var(--gray);
+    }
+
+    /* ========== GALLERY (фото из фотостока) ========== */
+    .gallery {
+      padding: 3rem 0;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .gallery-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s ease;
+      border: 1px solid rgba(73, 93, 139, 0.08);
+    }
+
+    .gallery-card:hover {
+      transform: scale(1.02);
+    }
+
+    .gallery-img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: var(--blue-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      color: var(--blue-accent);
+      background: linear-gradient(145deg, #eef3fa, #d9e2f0);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gallery-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .gallery-caption {
+      padding: 1rem 1.2rem;
+      font-family: var(--font-body);
+      font-weight: 500;
+      background: var(--white);
+      color: var(--black);
+      font-size: 1rem;
+      border-top: 1px solid var(--blue-soft);
+      text-align: center;
+    }
+
+    .gallery-caption small {
+      display: block;
+      font-weight: 400;
+      color: var(--gray);
+      font-size: 0.85rem;
+    }
+
+    /* ========== REVIEWS + "КАК ПРОХОДЯТ ЗАНЯТИЯ" (2 столбца) ========== */
+    .reviews-section {
+      padding: 3rem 0;
+    }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .review-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 1.6rem;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(73, 93, 139, 0.08);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s;
+    }
+
+    .review-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .review-text {
+      font-size: 0.98rem;
+      color: #2e3548;
+      flex: 1;
+      font-style: italic;
+      margin-bottom: 1.2rem;
+      position: relative;
+    }
+
+    .review-text::before {
+      content: '“';
+      font-size: 2.8rem;
+      color: var(--blue-soft);
+      position: absolute;
+      top: -14px;
+      left: -6px;
+      font-family: serif;
+      opacity: 0.7;
+    }
+
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--blue-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .author-info strong {
+      display: block;
+      font-size: 0.95rem;
+      color: var(--black);
+    }
+
+    .author-info span {
+      font-size: 0.8rem;
+      color: var(--gray);
+    }
+
+    /* Стили для карточек "Как проходят занятия" внутри сетки отзывов */
+    .review-card.lesson-card {
+      background: var(--blue-light);
+      border: 1px solid var(--blue-soft);
+    }
+
+    .review-card.lesson-card .lesson-icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .review-card.lesson-card h4 {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      color: var(--blue-accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .review-card.lesson-card p {
+      font-size: 0.95rem;
+      color: #2e3548;
+    }
+
+    /* ========== FORM + FAQ ========== */
+    .form-faq {
+      padding: 3rem 0 1rem;
+    }
+
+    .form-faq-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    /* Форма */
+    .form-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(73, 93, 139, 0.1);
+    }
+
+    .form-card h3 {
+      margin-bottom: 0.5rem;
+      font-family: var(--font-heading);
+      color: var(--blue-accent);
+      font-size: 1.8rem;
+    }
+
+    .form-card > p {
+      color: var(--gray);
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 6px;
+      font-size: 0.95rem;
+      color: var(--black);
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.85rem 1.2rem;
+      border: 1.5px solid #d0d9e8;
+      border-radius: 14px;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      transition: border 0.2s, box-shadow 0.2s;
+      background: #fafcff;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--blue-accent);
+      box-shadow: 0 0 0 4px rgba(73, 93, 139, 0.1);
+    }
+
+    .form-group input.error {
+      border-color: #d14d4d;
+      background: #fff6f6;
+    }
+
+    .error-message {
+      color: #d14d4d;
+      font-size: 0.85rem;
+      margin-top: 4px;
+      display: none;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin: 1.2rem 0;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      accent-color: var(--blue-accent);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .checkbox-group label {
+      font-size: 0.9rem;
+      color: var(--gray);
+      font-weight: 400;
+      line-height: 1.4;
+      cursor: pointer;
+    }
+
+    .checkbox-group label a {
+      color: var(--blue-accent);
+      text-decoration: underline;
+    }
+
+    .form-card .btn {
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+
+    .form-success {
+      display: none;
+      background: #e3f0e9;
+      color: #1e6b3b;
+      padding: 1rem;
+      border-radius: 14px;
+      text-align: center;
+      font-weight: 500;
+      margin-top: 1rem;
+    }
+
+    /* FAQ */
+    .faq-section {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(73, 93, 139, 0.1);
+    }
+
+    .faq-section h3 {
+      font-family: var(--font-heading);
+      color: var(--blue-accent);
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--blue-soft);
+      padding: 0.6rem 0;
+    }
+
+    .faq-item:last-child {
+      border-bottom: none;
+    }
+
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      background: none;
+      border: none;
+      font-family: var(--font-body);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--black);
+      text-align: left;
+      padding: 0.8rem 0;
+      cursor: pointer;
+      transition: color 0.2s;
+      gap: 12px;
+    }
+
+    .faq-question:hover {
+      color: var(--blue-accent);
+    }
+
+    .faq-question .icon {
+      font-size: 1.5rem;
+      color: var(--blue-accent);
+      transition: transform 0.25s;
+      flex-shrink: 0;
+      font-weight: 300;
+    }
+
+    .faq-item.open .faq-question .icon {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.2s;
+      padding: 0 0;
+      color: var(--gray);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 300px;
+      padding: 0.4rem 0 1rem;
+    }
+
+    /* ========== FOOTER ========== */
+    footer {
+      background: var(--black);
+      color: #b0b9cc;
+      padding: 2.5rem 0;
+      margin-top: 3rem;
+      position: relative;
+      z-index: 2;
+      border-top: 4px solid var(--blue-accent);
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .footer-logo {
+      font-family: var(--font-heading);
+      font-size: 1.8rem;
+      color: var(--white);
+      letter-spacing: 1px;
+    }
+
+    .footer-logo span {
+      color: var(--blue-soft);
+      font-size: 0.9rem;
+      display: block;
+      font-family: var(--font-body);
+      letter-spacing: 0.3px;
+      color: #9aa7c0;
+      margin-top: 4px;
+    }
+
+    .footer-contacts {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+      font-size: 0.95rem;
+    }
+
+    .footer-contacts a {
+      color: #b0b9cc;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-contacts a:hover {
+      color: var(--white);
+    }
+
+    .footer-copy {
+      text-align: center;
+      padding-top: 1.8rem;
+      margin-top: 1.8rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.85rem;
+      color: #6b7a99;
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 900px) {
+      .form-faq-inner {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .reviews-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .hero {
+        padding: 2rem 0;
+        gap: 24px;
+      }
+
+      .header-inner {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+      }
+
+      .logo {
+        justify-content: center;
+      }
+
+      nav {
+        justify-content: center;
+        gap: 18px;
+      }
+
+      .nav-cta {
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero-content h1 {
+        font-size: 2.2rem;
+      }
+
+      .hero-sub {
+        font-size: 1.1rem;
+      }
+
+      .btn {
+        padding: 0.8rem 1.6rem;
+        font-size: 1rem;
+        width: 100%;
+      }
+
+      .hero-cta {
+        flex-direction: column;
+      }
+
+      .adv-grid {
+        flex-direction: column;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .footer-contacts {
+        justify-content: center;
+      }
+
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .reviews-grid {
+        grid-template-columns: 1fr;
+      }
+
+      body::before {
+        font-size: 80px;
+        letter-spacing: 30px;
+        opacity: 0.5;
+      }
+
+      .form-card, .faq-section {
+        padding: 1.5rem;
+      }
+    }
+
+    /* Анимация появления */
+    .fade-in {
+      animation: fadeIn 0.6s ease both;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+  <!-- Подключаем Pacifico и Roboto через @import (без внешних JS-библиотек) -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@400;500;700&display=swap');
+  </style>
+</head>
+<body>
+  <!-- ========== HEADER ========== -->
+  <header>
+    <div class="container header-inner">
+      <a href="#" class="logo">
+        <div class="logo-icon">IT</div>
+        <div class="logo-text">
+          КиберКлуб<br>
+          <span>программирование · роботы · 3D</span>
+        </div>
+      </a>
+      <nav>
+        <a href="#advantages">Преимущества</a>
+        <a href="#gallery">Галерея</a>
+        <a href="#reviews">Отзывы</a>
+        <a href="#faq">FAQ</a>
+        <a href="#form" class="btn btn-primary nav-cta">Пробное занятие</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ========== HERO ========== -->
+    <section class="hero container fade-in">
+      <div class="hero-content">
+        <h1>
+          <span>Клуб будущих инженеров</span>
+          Программирование, робототехника и 3D для детей 6–17 лет
+        </h1>
+        <p class="hero-sub">
+          Учим создавать игры, собирать роботов и моделировать 3D-объекты. 
+          Дружелюбная атмосфера, современное оборудование, наставники-практики.
+        </p>
+        <div class="hero-cta">
+          <a href="#form" class="btn btn-primary" id="heroCta">Записаться на пробное</a>
+          <a href="#gallery" class="btn btn-outline">Смотреть работы</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <div class="tech-illustration">
+          <div class="big-icon">🤖🧑‍💻</div>
+          <p>IT-клуб «КиберКлуб»</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== ПРЕИМУЩЕСТВА (5) ========== -->
+    <section id="advantages" class="advantages container">
+      <h2 class="section-title">Почему родители выбирают нас</h2>
+      <p class="section-sub">5 причин доверить обучение ребёнка нашей команде</p>
+      <div class="adv-grid">
+        <div class="adv-card">
+          <span class="adv-icon">👨‍🏫</span>
+          <h3>Опытные наставники</h3>
+          <p>Педагоги и практики из IT-сферы с опытом работы с детьми</p>
+        </div>
+        <div class="adv-card">
+          <span class="adv-icon">🛠️</span>
+          <h3>Современное оборудование</h3>
+          <p>3D-принтеры, робототехнические наборы, мощные ПК</p>
+        </div>
+        <div class="adv-card">
+          <span class="adv-icon">🎯</span>
+          <h3>Проектный подход</h3>
+          <p>Каждый ребёнок делает свой проект: игру, робота или 3D-модель</p>
+        </div>
+        <div class="adv-card">
+          <span class="adv-icon">👶</span>
+          <h3>6–17 лет</h3>
+          <p>Группы по возрасту и уровню подготовки — комфортно каждому</p>
+        </div>
+        <div class="adv-card">
+          <span class="adv-icon">📈</span>
+          <h3>Видимый результат</h3>
+          <p>Портфолио, соревнования и хакатоны уже с первых месяцев</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== ГАЛЕРЕЯ (6 карточек с реальными фото из фотостока) ========== -->
+    <section id="gallery" class="gallery container">
+      <h2 class="section-title">Как проходят занятия</h2>
+      <p class="section-sub">Учащиеся за работой — фото из фотостока</p>
+      <div class="gallery-grid">
+        <div class="gallery-card">
+          <div class="gallery-img">
+            <img src="https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=600&h=450&fit=crop&crop=faces" alt="Дети программируют на ноутбуке" loading="lazy">
+          </div>
+          <div class="gallery-caption">Программирование игр <small>Python, Scratch</small></div>
+        </div>
+        <div class="gallery-card">
+          <div class="gallery-img">
+            <img src="https://images.unsplash.com/photo-1561144257-e32e8efc6c4f?w=600&h=450&fit=crop&crop=faces" alt="Ребёнок собирает робота" loading="lazy">
+          </div>
+          <div class="gallery-caption">Робототехника <small>LEGO, Arduino</small></div>
+        </div>
+        <div class="gallery-card">
+          <div class="gallery-img">
+            <img src="https://images.unsplash.com/photo-1610484826967-09c5720778c7?w=600&h=450&fit=crop&crop=faces" alt="3D-моделирование для детей" loading="lazy">
+          </div>
+          <div class="gallery-caption">3D-моделирование <small>Blender, Tinkercad</small></div>
+        </div>
+        <div class="gallery-card">
+          <div class="gallery-img">
+            <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=600&h=450&fit=crop&crop=faces" alt="Юный инженер за работой" loading="lazy">
+          </div>
+          <div class="gallery-caption">Юный инженер <small>Сборка и настройка</small></div>
+        </div>
+        <div class="gallery-card">
+          <div class="gallery-img">
+            <img src="https://images.unsplash.com/photo-1587691592099-24045742c181?w=600&h=450&fit=crop&crop=faces" alt="Девочка программирует" loading="lazy">
+          </div>
+          <div class="gallery-caption">Первые проекты <small>Презентация работ</small></div>
+        </div>
+        <div class="gallery-card">
+          <div class="gallery-img">
+            <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600&h=450&fit=crop&crop=faces" alt="Командная работа детей за компьютерами" loading="lazy">
+          </div>
+          <div class="gallery-caption">Командная работа <small>Хакатоны и квесты</small></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== ОТЗЫВЫ + "КАК ПРОХОДЯТ ЗАНЯТИЯ" (6 карточек в 2 столбца) ========== -->
+    <section id="reviews" class="reviews-section container">
+      <h2 class="section-title">Отзывы и как проходят занятия</h2>
+      <p class="section-sub">6 карточек в 2 столбца: 3 отзыва родителей и 3 описания занятий</p>
+      <div class="reviews-grid">
+        <!-- 1. Отзыв -->
+        <div class="review-card">
+          <p class="review-text">Сын (10 лет) в восторге! За месяц собрал первого робота и уже показывает игры друзьям.</p>
+          <div class="review-author">
+            <div class="avatar">ЕК</div>
+            <div class="author-info"><strong>Екатерина</strong><span>мама Артёма, 10 лет</span></div>
+          </div>
+        </div>
+        <!-- 2. Как проходят занятия -->
+        <div class="review-card lesson-card">
+          <div class="lesson-icon">💻</div>
+          <h4>Программирование</h4>
+          <p>Ребята создают игры и приложения на Scratch и Python. Каждое занятие — мини-проект с видимым результатом.</p>
+        </div>
+        <!-- 3. Отзыв -->
+        <div class="review-card">
+          <p class="review-text">Дочь занимается 3D-моделированием. Педагоги внимательные, всегда на связи.</p>
+          <div class="review-author">
+            <div class="avatar">МС</div>
+            <div class="author-info"><strong>Марина</strong><span>мама Софии, 12 лет</span></div>
+          </div>
+        </div>
+        <!-- 4. Как проходят занятия -->
+        <div class="review-card lesson-card">
+          <div class="lesson-icon">🤖</div>
+          <h4>Робототехника</h4>
+          <p>Сборка и программирование роботов на LEGO и Arduino. Дети учатся работать в команде и защищать проекты.</p>
+        </div>
+        <!-- 5. Отзыв -->
+        <div class="review-card">
+          <p class="review-text">Отличная организация, безопасно, современно. Ребёнок бежит на занятия с удовольствием.</p>
+          <div class="review-author">
+            <div class="avatar">ДП</div>
+            <div class="author-info"><strong>Дмитрий</strong><span>папа Максима, 9 лет</span></div>
+          </div>
+        </div>
+        <!-- 6. Как проходят занятия -->
+        <div class="review-card lesson-card">
+          <div class="lesson-icon">🧊</div>
+          <h4>3D-моделирование</h4>
+          <p>Осваиваем Blender и Tinkercad: от простых фигур до персонажей для игр. Лучшие модели печатаем на 3D-принтере.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== ФОРМА + FAQ ========== -->
+    <section id="form" class="form-faq container">
+      <h2 class="section-title">Запишитесь на пробное занятие</h2>
+      <p class="section-sub">Оставьте заявку — мы перезвоним и подберём удобное время</p>
+      <div class="form-faq-inner">
+        <!-- Форма заявки -->
+        <div class="form-card">
+          <h3>Пробное занятие</h3>
+          <p>Бесплатно. 60–90 минут. Знакомство с клубом и педагогом.</p>
+          <form id="bookingForm" novalidate>
+            <div class="form-group">
+              <label for="name">Имя ребёнка *</label>
+              <input type="text" id="name" name="name" placeholder="Например, Алексей" autocomplete="off">
+              <div class="error-message" id="nameError">Введите имя</div>
+            </div>
+            <div class="form-group">
+              <label for="phone">Телефон или email *</label>
+              <input type="text" id="phone" name="phone" placeholder="+7 999 123-45-67 или mail@example.com" autocomplete="off">
+              <div class="error-message" id="phoneError">Введите телефон или email</div>
+            </div>
+            <div class="checkbox-group">
+              <input type="checkbox" id="agree" name="agree">
+              <label for="agree">Я согласен(а) на обработку <a href="#" onclick="alert('Политика конфиденциальности: данные используются только для связи по заявке.'); return false;">персональных данных</a> *</label>
+            </div>
+            <div class="error-message" id="agreeError" style="margin-top:-0.5rem; margin-bottom:0.8rem;">Необходимо согласие</div>
+            <button type="submit" class="btn btn-primary">Отправить заявку</button>
+            <div class="form-success" id="formSuccess">✅ Спасибо! Мы свяжемся с вами в ближайшее время.</div>
+          </form>
+        </div>
+
+        <!-- FAQ аккордеон -->
+        <div class="faq-section" id="faq">
+          <h3>Частые вопросы</h3>
+          <div class="faq-item">
+            <button class="faq-question" type="button">
+              С какого возраста можно заниматься?
+              <span class="icon">+</span>
+            </button>
+            <div class="faq-answer">
+              Мы принимаем детей с 6 лет. Группы формируются по возрасту и уровню: 6–8, 9–11, 12–14, 15–17 лет. Пробное занятие поможет определить подходящую программу.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" type="button">
+              Нужен ли ребёнку свой ноутбук или оборудование?
+              <span class="icon">+</span>
+            </button>
+            <div class="faq-answer">
+              Нет, всё оборудование предоставляем мы: современные ПК, робототехнические наборы, 3D-принтеры. Можно принести свой ноутбук, если удобно.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" type="button">
+              Сколько длится пробное занятие и что на нём будет?
+              <span class="icon">+</span>
+            </button>
+            <div class="faq-answer">
+              Пробное занятие длится 60–90 минут. Ребёнок познакомится с педагогом, попробует свои силы в одном из направлений (программирование, робототехника или 3D), а вы сможете задать вопросы и посмотреть класс.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" type="button">
+              Как проходят занятия в группах?
+              <span class="icon">+</span>
+            </button>
+            <div class="faq-answer">
+              Занятия проходят 1–2 раза в неделю по будням или выходным. В группе до 8 человек, что позволяет уделить внимание каждому. Длительность — 1–1,5 часа в зависимости от возраста.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" type="button">
+              Есть ли скидки или абонементы?
+              <span class="icon">+</span>
+            </button>
+            <div class="faq-answer">
+              Да, действуют скидки при оплате за 3 месяца, для второго ребёнка из семьи, а также специальные предложения для новых учеников. Подробности у администратора.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer>
+    <div class="container footer-inner">
+      <div class="footer-logo">
+        КиберКлуб<br>
+        <span>IT-образование для детей 6–17 лет</span>
+      </div>
+      <div class="footer-contacts">
+        <a href="tel:+74951234567">+7 (495) 123-45-67</a>
+        <a href="mailto:hello@cyberclub.ru">hello@cyberclub.ru</a>
+        <a href="#" onclick="alert('г. Москва, ул. Инновационная, 10'); return false;">г. Москва, ул. Инновационная, 10</a>
+      </div>
+    </div>
+    <div class="container footer-copy">
+      © 2025 КиберКлуб. Все права защищены. 
+    </div>
+  </footer>
+
+  <!-- ========== JAVASCRIPT ========== -->
+  <script>
+    (function() {
+      // Плавная прокрутка для CTA и якорных ссылок
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const href = this.getAttribute('href');
+          if (href === '#') return;
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+
+      // FAQ аккордеон
+      document.querySelectorAll('.faq-question').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const parent = this.closest('.faq-item');
+          const isOpen = parent.classList.contains('open');
+          document.querySelectorAll('.faq-item').forEach(item => item.classList.remove('open'));
+          if (!isOpen) parent.classList.add('open');
+        });
+      });
+
+      // Валидация формы
+      const form = document.getElementById('bookingForm');
+      const nameInput = document.getElementById('name');
+      const phoneInput = document.getElementById('phone');
+      const agreeCheckbox = document.getElementById('agree');
+      const nameError = document.getElementById('nameError');
+      const phoneError = document.getElementById('phoneError');
+      const agreeError = document.getElementById('agreeError');
+      const formSuccess = document.getElementById('formSuccess');
+
+      nameInput.addEventListener('input', () => {
+        nameInput.classList.remove('error');
+        nameError.classList.remove('show');
+        formSuccess.style.display = 'none';
+      });
+      phoneInput.addEventListener('input', () => {
+        phoneInput.classList.remove('error');
+        phoneError.classList.remove('show');
+        formSuccess.style.display = 'none';
+      });
+      agreeCheckbox.addEventListener('change', () => {
+        agreeError.classList.remove('show');
+        formSuccess.style.display = 'none';
+      });
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        let isValid = true;
+
+        const nameValue = nameInput.value.trim();
+        if (nameValue === '') {
+          nameInput.classList.add('error');
+          nameError.classList.add('show');
+          isValid = false;
+        } else {
+          nameInput.classList.remove('error');
+          nameError.classList.remove('show');
+        }
+
+        const phoneValue = phoneInput.value.trim();
+        if (phoneValue === '') {
+          phoneInput.classList.add('error');
+          phoneError.classList.add('show');
+          isValid = false;
+        } else {
+          const hasEmail = /@/.test(phoneValue) && phoneValue.includes('.');
+          const hasPhone = /[\d+][\d\s\-()]{3,}/.test(phoneValue);
+          if (!hasEmail && !hasPhone) {
+            phoneInput.classList.add('error');
+            phoneError.textContent = 'Введите корректный телефон или email';
+            phoneError.classList.add('show');
+            isValid = false;
+          } else {
+            phoneInput.classList.remove('error');
+            phoneError.classList.remove('show');
+          }
+        }
+
+        if (!agreeCheckbox.checked) {
+          agreeError.classList.add('show');
+          isValid = false;
+        } else {
+          agreeError.classList.remove('show');
+        }
+
+        if (isValid) {
+          formSuccess.style.display = 'block';
+          form.reset();
+          nameInput.classList.remove('error');
+          phoneInput.classList.remove('error');
+          nameError.classList.remove('show');
+          phoneError.classList.remove('show');
+          agreeError.classList.remove('show');
+          setTimeout(() => {
+            formSuccess.style.display = 'none';
+          }, 5000);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
