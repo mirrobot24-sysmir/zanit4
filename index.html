@@ -1308,7 +1308,7 @@
             headers: {
               'Content-Type': 'application/json',
               'apikey': SUPABASE_API_KEY,
-              'Authorization': 'Bearer ' + SUPABASE_API_KEY,
+              // Заголовок Authorization УБРАН, чтобы избежать ошибки с новыми ключами sb_publishable_
               'Prefer': 'return=representation'
             },
             body: JSON.stringify({
@@ -1319,7 +1319,6 @@
           });
 
           if (!response.ok) {
-            // Пробуем получить текст ошибки
             const errorText = await response.text();
             console.error('Supabase insert error:', response.status, errorText);
             throw new Error('Ошибка сервера: ' + response.status);
