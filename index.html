@@ -36,7 +36,6 @@
       overflow-x: hidden;
     }
 
-    /* Приглушенные IT-элементы на фоне (детская тематика) */
     body::before {
       content: "⚙️ 🤖 🧩 🖥️ 📡 🔧";
       position: fixed;
@@ -60,7 +59,6 @@
       justify-content: center;
     }
 
-    /* Контейнер для контента поверх фона */
     .container {
       width: 100%;
       max-width: 1200px;
@@ -138,6 +136,12 @@
       border-color: #3b4d73;
       transform: translateY(-2px);
       box-shadow: 0 12px 22px rgba(73, 93, 139, 0.3);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      transform: none;
     }
 
     .btn-outline {
@@ -272,7 +276,7 @@
     }
 
     .hero-content h1 span {
-      color: var(--black);
+      color: var(--blue-accent);
       font-family: var(--font-body);
       font-weight: 700;
       font-size: 0.5em;
@@ -280,7 +284,6 @@
       letter-spacing: 2px;
       text-transform: uppercase;
       margin-bottom: 6px;
-      color: var(--blue-accent);
     }
 
     .hero-sub {
@@ -374,7 +377,7 @@
       color: var(--gray);
     }
 
-    /* ========== GALLERY (фото из фотостока) ========== */
+    /* ========== GALLERY ========== */
     .gallery {
       padding: 3rem 0;
     }
@@ -437,7 +440,7 @@
       font-size: 0.85rem;
     }
 
-    /* ========== REVIEWS + "КАК ПРОХОДЯТ ЗАНЯТИЯ" (2 столбца) ========== */
+    /* ========== REVIEWS ========== */
     .reviews-section {
       padding: 3rem 0;
     }
@@ -514,7 +517,6 @@
       color: var(--gray);
     }
 
-    /* Стили для карточек "Как проходят занятия" внутри сетки отзывов */
     .review-card.lesson-card {
       background: var(--blue-light);
       border: 1px solid var(--blue-soft);
@@ -549,7 +551,6 @@
       align-items: start;
     }
 
-    /* Форма */
     .form-card {
       background: var(--white);
       border-radius: var(--radius);
@@ -660,6 +661,17 @@
       margin-top: 1rem;
     }
 
+    .form-error-server {
+      display: none;
+      background: #fdecec;
+      color: #a12626;
+      padding: 1rem;
+      border-radius: 14px;
+      text-align: center;
+      font-weight: 500;
+      margin-top: 1rem;
+    }
+
     /* FAQ */
     .faq-section {
       background: var(--white);
@@ -761,12 +773,11 @@
     }
 
     .footer-logo span {
-      color: var(--blue-soft);
+      color: #9aa7c0;
       font-size: 0.9rem;
       display: block;
       font-family: var(--font-body);
       letter-spacing: 0.3px;
-      color: #9aa7c0;
       margin-top: 4px;
     }
 
@@ -888,7 +899,6 @@
       }
     }
 
-    /* Анимация появления */
     .fade-in {
       animation: fadeIn 0.6s ease both;
     }
@@ -904,7 +914,6 @@
       }
     }
   </style>
-  <!-- Подключаем Pacifico и Roboto через @import (без внешних JS-библиотек) -->
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@400;500;700&display=swap');
   </style>
@@ -939,7 +948,7 @@
           Программирование, робототехника и 3D для детей 6–17 лет
         </h1>
         <p class="hero-sub">
-          Учим создавать игры, собирать роботов и моделировать 3D-объекты. 
+          Учим создавать игры, собирать роботов и моделировать 3D-объекты.
           Дружелюбная атмосфера, современное оборудование, наставники-практики.
         </p>
         <div class="hero-cta">
@@ -988,7 +997,7 @@
       </div>
     </section>
 
-    <!-- ========== ГАЛЕРЕЯ (6 карточек с реальными фото из фотостока) ========== -->
+    <!-- ========== ГАЛЕРЕЯ ========== -->
     <section id="gallery" class="gallery container">
       <h2 class="section-title">Как проходят занятия</h2>
       <p class="section-sub">Учащиеся за работой — фото из фотостока</p>
@@ -1032,12 +1041,11 @@
       </div>
     </section>
 
-    <!-- ========== ОТЗЫВЫ + "КАК ПРОХОДЯТ ЗАНЯТИЯ" (6 карточек в 2 столбца) ========== -->
+    <!-- ========== ОТЗЫВЫ + "КАК ПРОХОДЯТ ЗАНЯТИЯ" ========== -->
     <section id="reviews" class="reviews-section container">
       <h2 class="section-title">Отзывы и как проходят занятия</h2>
       <p class="section-sub">6 карточек в 2 столбца: 3 отзыва родителей и 3 описания занятий</p>
       <div class="reviews-grid">
-        <!-- 1. Отзыв -->
         <div class="review-card">
           <p class="review-text">Сын (10 лет) в восторге! За месяц собрал первого робота и уже показывает игры друзьям.</p>
           <div class="review-author">
@@ -1045,13 +1053,11 @@
             <div class="author-info"><strong>Екатерина</strong><span>мама Артёма, 10 лет</span></div>
           </div>
         </div>
-        <!-- 2. Как проходят занятия -->
         <div class="review-card lesson-card">
           <div class="lesson-icon">💻</div>
           <h4>Программирование</h4>
           <p>Ребята создают игры и приложения на Scratch и Python. Каждое занятие — мини-проект с видимым результатом.</p>
         </div>
-        <!-- 3. Отзыв -->
         <div class="review-card">
           <p class="review-text">Дочь занимается 3D-моделированием. Педагоги внимательные, всегда на связи.</p>
           <div class="review-author">
@@ -1059,13 +1065,11 @@
             <div class="author-info"><strong>Марина</strong><span>мама Софии, 12 лет</span></div>
           </div>
         </div>
-        <!-- 4. Как проходят занятия -->
         <div class="review-card lesson-card">
           <div class="lesson-icon">🤖</div>
           <h4>Робототехника</h4>
           <p>Сборка и программирование роботов на LEGO и Arduino. Дети учатся работать в команде и защищать проекты.</p>
         </div>
-        <!-- 5. Отзыв -->
         <div class="review-card">
           <p class="review-text">Отличная организация, безопасно, современно. Ребёнок бежит на занятия с удовольствием.</p>
           <div class="review-author">
@@ -1073,7 +1077,6 @@
             <div class="author-info"><strong>Дмитрий</strong><span>папа Максима, 9 лет</span></div>
           </div>
         </div>
-        <!-- 6. Как проходят занятия -->
         <div class="review-card lesson-card">
           <div class="lesson-icon">🧊</div>
           <h4>3D-моделирование</h4>
@@ -1107,8 +1110,9 @@
               <label for="agree">Я согласен(а) на обработку <a href="#" onclick="alert('Политика конфиденциальности: данные используются только для связи по заявке.'); return false;">персональных данных</a> *</label>
             </div>
             <div class="error-message" id="agreeError" style="margin-top:-0.5rem; margin-bottom:0.8rem;">Необходимо согласие</div>
-            <button type="submit" class="btn btn-primary">Отправить заявку</button>
+            <button type="submit" class="btn btn-primary" id="submitBtn">Отправить заявку</button>
             <div class="form-success" id="formSuccess">✅ Спасибо! Мы свяжемся с вами в ближайшее время.</div>
+            <div class="form-error-server" id="formServerError">Не удалось отправить заявку. Пожалуйста, попробуйте позже.</div>
           </form>
         </div>
 
@@ -1179,14 +1183,18 @@
       </div>
     </div>
     <div class="container footer-copy">
-      © 2025 КиберКлуб. Все права защищены. 
+      © 2025 КиберКлуб. Все права защищены.
     </div>
   </footer>
 
   <!-- ========== JAVASCRIPT ========== -->
   <script>
     (function() {
-      // Плавная прокрутка для CTA и якорных ссылок
+      // ===== НАСТРОЙКИ SUPABASE =====
+      const SUPABASE_URL = 'https://ugbbrulddixnvqqlytct.supabase.co';
+      const SUPABASE_API_KEY = 'sb_publishable_m0ILP_GSik3P9iQImVq4_g_mm2_rTTg';
+
+      // Плавная прокрутка
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
           const href = this.getAttribute('href');
@@ -1209,7 +1217,7 @@
         });
       });
 
-      // Валидация формы
+      // Элементы формы
       const form = document.getElementById('bookingForm');
       const nameInput = document.getElementById('name');
       const phoneInput = document.getElementById('phone');
@@ -1218,26 +1226,36 @@
       const phoneError = document.getElementById('phoneError');
       const agreeError = document.getElementById('agreeError');
       const formSuccess = document.getElementById('formSuccess');
+      const formServerError = document.getElementById('formServerError');
+      const submitBtn = document.getElementById('submitBtn');
+
+      function hideMessages() {
+        formSuccess.style.display = 'none';
+        formServerError.style.display = 'none';
+      }
 
       nameInput.addEventListener('input', () => {
         nameInput.classList.remove('error');
         nameError.classList.remove('show');
-        formSuccess.style.display = 'none';
+        hideMessages();
       });
       phoneInput.addEventListener('input', () => {
         phoneInput.classList.remove('error');
         phoneError.classList.remove('show');
-        formSuccess.style.display = 'none';
+        hideMessages();
       });
       agreeCheckbox.addEventListener('change', () => {
         agreeError.classList.remove('show');
-        formSuccess.style.display = 'none';
+        hideMessages();
       });
 
-      form.addEventListener('submit', function(e) {
+      // Валидация и отправка
+      form.addEventListener('submit', async function(e) {
         e.preventDefault();
+        hideMessages();
         let isValid = true;
 
+        // Имя
         const nameValue = nameInput.value.trim();
         if (nameValue === '') {
           nameInput.classList.add('error');
@@ -1248,9 +1266,11 @@
           nameError.classList.remove('show');
         }
 
+        // Телефон / email
         const phoneValue = phoneInput.value.trim();
         if (phoneValue === '') {
           phoneInput.classList.add('error');
+          phoneError.textContent = 'Введите телефон или email';
           phoneError.classList.add('show');
           isValid = false;
         } else {
@@ -1267,6 +1287,7 @@
           }
         }
 
+        // Согласие
         if (!agreeCheckbox.checked) {
           agreeError.classList.add('show');
           isValid = false;
@@ -1274,7 +1295,37 @@
           agreeError.classList.remove('show');
         }
 
-        if (isValid) {
+        if (!isValid) return;
+
+        // Блокируем кнопку на время запроса
+        submitBtn.disabled = true;
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Отправка...';
+
+        try {
+          const response = await fetch(SUPABASE_URL + '/rest/v1/trial_lesson_requests', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'apikey': SUPABASE_API_KEY,
+              'Authorization': 'Bearer ' + SUPABASE_API_KEY,
+              'Prefer': 'return=representation'
+            },
+            body: JSON.stringify({
+              child_name: nameValue,
+              contact_info: phoneValue,
+              is_consented: true
+            })
+          });
+
+          if (!response.ok) {
+            // Пробуем получить текст ошибки
+            const errorText = await response.text();
+            console.error('Supabase insert error:', response.status, errorText);
+            throw new Error('Ошибка сервера: ' + response.status);
+          }
+
+          // Успех
           formSuccess.style.display = 'block';
           form.reset();
           nameInput.classList.remove('error');
@@ -1282,9 +1333,16 @@
           nameError.classList.remove('show');
           phoneError.classList.remove('show');
           agreeError.classList.remove('show');
+
           setTimeout(() => {
             formSuccess.style.display = 'none';
-          }, 5000);
+          }, 6000);
+        } catch (err) {
+          console.error(err);
+          formServerError.style.display = 'block';
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
         }
       });
     })();
